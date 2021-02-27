@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906008658570",
+    "project_id": "eco-footprint",
+    "storage_bucket": "eco-footprint.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906008658570:android:8266cd970bf1c7a5a4a373",
+        "android_client_info": {
+          "package_name": "eco.footprint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906008658570-bdm5v4n2n3nbgq74sj1jscib1vovqtg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMIlwNUFgla4lsn8rBlCiC2xiD4SNQD5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906008658570-bdm5v4n2n3nbgq74sj1jscib1vovqtg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
