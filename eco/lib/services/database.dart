@@ -14,6 +14,7 @@ class DatabaseService {
 
   Future<void> updateUserData(String name, String cartype, int miles, int mpg) async {
     return await transpoCollection.document(uid).setData({
+      'name' : name,
       'cartype': cartype,
       'miles': miles,
       'mpg': mpg,
