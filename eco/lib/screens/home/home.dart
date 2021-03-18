@@ -1,12 +1,10 @@
-import 'package:eco/models/brew.dart';
-import 'package:eco/screens/home/brew_list.dart';
 import 'package:eco/screens/calculator/transportation.dart'; //SettingsForm
 import 'package:eco/services/auth.dart';
 import 'package:eco/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:eco/models/transpo.dart';
-import 'package:eco/screens/home/transpo_list.dart';
+import 'package:eco/models/footprint.dart';
+import 'package:eco/screens/home/footprint_list.dart';
 
 
 class Home extends StatelessWidget {
@@ -25,12 +23,12 @@ class Home extends StatelessWidget {
       });
     }
 
-    return StreamProvider<List<Transpo>>.value(
-      value: DatabaseService().transpos,
+    return StreamProvider<List<Footprint>>.value(
+      value: DatabaseService().footprints,
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
-          title: Text('Transpo Crew'),
+          title: Text('Eco Footprint'),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           actions: <Widget>[
@@ -55,7 +53,7 @@ class Home extends StatelessWidget {
             //   fit: BoxFit.cover,
             // ),
           ),
-          child: TranspoList()
+          child: FootprintList()
         ),
       ),
     );

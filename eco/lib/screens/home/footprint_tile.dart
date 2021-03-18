@@ -1,10 +1,10 @@
-import 'package:eco/models/transpo.dart';
+import 'package:eco/models/footprint.dart';
 import 'package:flutter/material.dart';
 
-class TranspoTile extends StatelessWidget {
+class FootprintTile extends StatelessWidget {
 
-  final Transpo transpo;
-  TranspoTile({ this.transpo });
+  final Footprint fp;
+  FootprintTile({ this.fp });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,8 @@ class TranspoTile extends StatelessWidget {
             backgroundColor: Colors.brown[100],
             // backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
-          title: Text(transpo.cartype),
-          subtitle: Text('Has ${transpo.mpg} miles per gallon'),
+          title: Text(fp.cartype),
+          subtitle: Text('Has ${fp.mpg} miles per gallon'),
         ),
       ),
     );

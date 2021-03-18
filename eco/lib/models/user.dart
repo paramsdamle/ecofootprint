@@ -15,7 +15,8 @@ class UserData {
   final String cartype;
   final int miles;
   final int mpg;
+  final int footprint;
 
-  UserData({ this.uid, this.sugars, this.strength, this.name, this.cartype, this.miles, this.mpg });
+  UserData({ this.uid, this.sugars, this.strength, this.name, this.cartype, this.miles, this.mpg, this.footprint });
 
 }
