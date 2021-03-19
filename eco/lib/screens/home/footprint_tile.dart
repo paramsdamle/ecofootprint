@@ -15,7 +15,7 @@ class FootprintTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Colors.green[100],
             // backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
           title: Text(fp.cartype),
