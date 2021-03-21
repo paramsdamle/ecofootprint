@@ -12,12 +12,18 @@ class DatabaseService {
   // final CollectionReference brewCollection = Firestore.instance.collection('brews');
   final CollectionReference fpCollection = Firestore.instance.collection('footprint');
 
-  Future<void> updateUserData(String name, String cartype, int miles, int mpg) async {
+  Future<void> updateUserData({String name, String cartype, int miles, int mpg, List energy, double water,
+      List food}) async {
+    int footprint = 0;  // CALCULATE HERE /////////////////////////////////////////
     return await fpCollection.document(uid).setData({
       'name' : name,
       'cartype': cartype,
       'miles': miles,
       'mpg': mpg,
+      'energy': energy,
+      'water': water,
+      'food': food,
+      'footprint': footprint,
     });
   }
 
@@ -29,6 +35,10 @@ class DatabaseService {
           cartype: doc.data['cartype'] ?? '',
           miles: doc.data['miles'] ?? 0,
           mpg: doc.data['mpg'] ?? 0,
+          energy: doc.data['energy'] ?? [0,0,0],
+          water: doc.data['water'] ?? 0.0,
+          food: doc.data['food'] ?? [0.0,0.0,0.0,0.0,0.0],
+          footprint: doc.data['footprint'] ?? 0,
       );
     }).toList();
   }
@@ -40,7 +50,11 @@ class DatabaseService {
         name: snapshot.data['name'],
         cartype: snapshot.data['cartype'],
         miles: snapshot.data['miles'],
-        mpg: snapshot.data['mpg']
+        mpg: snapshot.data['mpg'],
+        energy: snapshot.data['energy'],
+        water: snapshot.data['water'],
+        food: snapshot.data['food'],
+        footprint: snapshot.data['footprint']
     );
   }
 

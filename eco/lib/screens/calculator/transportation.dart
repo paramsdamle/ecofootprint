@@ -86,10 +86,13 @@ class _SettingsFormState extends State<SettingsForm> {
             onPressed: () async {
               if(_formKey.currentState.validate()){
                 await DatabaseService(uid: user.uid).updateUserData(
-                    _currentName ?? snapshot.data.name,
-                    _currentCartype ?? snapshot.data.cartype,
-                    _currentMiles ?? snapshot.data.miles,
-                    _currentMPG ?? snapshot.data.mpg
+                    name:_currentName ?? snapshot.data.name,
+                    cartype:_currentCartype ?? snapshot.data.cartype,
+                    miles:_currentMiles ?? snapshot.data.miles,
+                    mpg:_currentMPG ?? snapshot.data.mpg,
+                    energy: snapshot.data.energy,
+
+                    ////////////////
                 );
                 Navigator.pop(context);
               }
