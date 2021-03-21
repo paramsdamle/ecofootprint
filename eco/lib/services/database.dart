@@ -1,5 +1,5 @@
 import 'package:eco/models/brew.dart';
-import 'package:eco/models/transpo.dart';
+import 'package:eco/models/footprint.dart';
 import 'package:eco/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,10 +10,10 @@ class DatabaseService {
 
   // collection reference
   // final CollectionReference brewCollection = Firestore.instance.collection('brews');
-  final CollectionReference transpoCollection = Firestore.instance.collection('transpo');
+  final CollectionReference fpCollection = Firestore.instance.collection('footprint');
 
   Future<void> updateUserData(String name, String cartype, int miles, int mpg) async {
-    return await transpoCollection.document(uid).setData({
+    return await fpCollection.document(uid).setData({
       'name' : name,
       'cartype': cartype,
       'miles': miles,
@@ -22,10 +22,10 @@ class DatabaseService {
   }
 
   // brew list from snapshot
-  List<Transpo> _transpoListFromSnapshot(QuerySnapshot snapshot) {
+  List<Footprint> _fpListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
       //print(doc.data);
-      return Transpo(
+      return Footprint(
           cartype: doc.data['cartype'] ?? '',
           miles: doc.data['miles'] ?? 0,
           mpg: doc.data['mpg'] ?? 0,
@@ -45,14 +45,14 @@ class DatabaseService {
   }
 
   // get brews stream
-  Stream<List<Transpo>> get transpos {
-    return transpoCollection.snapshots()
-        .map(_transpoListFromSnapshot);
+  Stream<List<Footprint>> get footprints {
+    return fpCollection.snapshots()
+        .map(_fpListFromSnapshot);
   }
 
   // get user doc stream
   Stream<UserData> get userData {
-    return transpoCollection.document(uid).snapshots()
+    return fpCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
   }
 
