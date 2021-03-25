@@ -1,20 +1,35 @@
 class Footprint {
 
-  final String cartype; // electric, gas, diesel, public, air
+  final String carType; // electric, gas, diesel, public, air
   final int miles;
   final int mpg;
 
-  final List energy; // cost per year of electricity, nat gas, and heating oil
-
+  final int electricity; // cost per year of electricity, nat gas, and heating oil
+  final int naturalGas;
+  final int heatingOil;
   final double water;
 
-  final List food; // meat/eggs, grains, dairy, fruits/veggies, snacks
+  final double meatFishEggs; // amount of usage as a percent compared to normal
+  final double grains;
+  final double dairy;
+  final double fruitsVegetables;
+  final double snacksDrinks;
 
   final int footprint; // total footprint
 
-  Footprint({ this.cartype, this.miles, this.mpg,
-    this.energy, this.water,
-    this.food,
+  Footprint({
+    this.carType,
+    this.miles,
+    this.mpg,
+    this.electricity,
+    this.naturalGas,
+    this.heatingOil,
+    this.water,
+    this.meatFishEggs,
+    this.grains,
+    this.dairy,
+    this.fruitsVegetables,
+    this.snacksDrinks,
     this.footprint,
   });
 

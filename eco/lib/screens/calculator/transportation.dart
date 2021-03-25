@@ -13,38 +13,42 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
 
   final _formKey = GlobalKey<FormState>();
-  final List<String> cartypes = ['Gasoline', 'Diesel', 'Electric', 'Public', 'Air'];
+  final List<String> carTypes = ['Gasoline', 'Diesel', 'Electric', 'Public', 'Air'];
+  final List<String> energyTypes = ['Electricity', 'Natural Gas', 'Heating Oil & Additional Fuels'];
 
-  // form values
+  // transportation form values
   String _currentName;
-  String _currentCartype;
+  String _currentCarType;
   int _currentMiles;
   int _currentMPG;
+  // energy form values
+  int _currentElectricity;
+  int _currentNaturalGas;
+  int _currentHeatingOil;
+  int _currentWater;
+  // food form values
+  double _currentMeatFishEggs;
+  double _currentGrains;
+  double _currentDairy;
+  double _currentFruitsVegetables;
+  double _currentSnacksDrinks;
 
-  /*void _showSettingsPanel2() {
-    showModalBottomSheet(context: context, builder: (context) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-        child: SettingsForm2(),
-      );
-    });
-  }*/
 
-  Column col0(user, userData, snapshot) {
+  Column transportation(user, userData, snapshot) { // transportation
     return Column(
       children: <Widget>[
         SizedBox(height: 5.0),
 
         DropdownButtonFormField(
-          value: _currentCartype ?? userData.cartype,
+          value: _currentCarType ?? userData.carType,
           decoration: textInputDecoration,
-          items: cartypes.map((cartype) {
+          items: carTypes.map((carType) {
             return DropdownMenuItem(
-              value: cartype,
-              child: Text('$cartype-type transportation'),
+              value: carType,
+              child: Text('$carType-type transportation'),
             );
           }).toList(),
-          onChanged: (val) => setState(() => _currentCartype = val ),
+          onChanged: (val) => setState(() => _currentCarType = val ),
         ),
 
         SizedBox(height: 10.0),
@@ -86,13 +90,19 @@ class _SettingsFormState extends State<SettingsForm> {
             onPressed: () async {
               if(_formKey.currentState.validate()){
                 await DatabaseService(uid: user.uid).updateUserData(
-                    name:_currentName ?? snapshot.data.name,
-                    cartype:_currentCartype ?? snapshot.data.cartype,
-                    miles:_currentMiles ?? snapshot.data.miles,
-                    mpg:_currentMPG ?? snapshot.data.mpg,
-                    energy: snapshot.data.energy,
-
-                    ////////////////
+                    name: _currentName ?? snapshot.data.name,
+                    carType: _currentCarType ?? snapshot.data.carType,
+                    miles: _currentMiles ?? snapshot.data.miles,
+                    mpg: _currentMPG ?? snapshot.data.mpg,
+                    electricity: _currentElectricity ?? snapshot.data.electricity,
+                    naturalGas: _currentNaturalGas ?? snapshot.data.naturalGas,
+                    heatingOil: _currentHeatingOil ?? snapshot.data.heatingOil,
+                    water: _currentWater ?? snapshot.data.water,
+                    meatFishEggs: _currentMeatFishEggs ?? snapshot.data.meatFishEggs,
+                    grains: _currentGrains ?? snapshot.data.grains,
+                    dairy: _currentDairy ?? snapshot.data.dairy,
+                    fruitsVegetables: _currentFruitsVegetables ?? snapshot.data.fruitsVegetables,
+                    snacksDrinks: _currentSnacksDrinks ?? snapshot.data.snacksDrinks,
                 );
                 Navigator.pop(context);
               }
@@ -137,44 +147,48 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   }
 
-  Column col1(user, userData, snapshot) {
+  Column energy(user, userData, snapshot) { // energy
     return Column(
       children: <Widget>[
         SizedBox(height: 5.0),
 
-        DropdownButtonFormField(
-          value: _currentCartype ?? userData.cartype,
+        TextFormField(
+          initialValue: userData.electricity.toString(),
           decoration: textInputDecoration,
-          items: cartypes.map((cartype) {
-            return DropdownMenuItem(
-              value: cartype,
-              child: Text('$cartype-type energy'),
-            );
-          }).toList(),
-          onChanged: (val) => setState(() => _currentCartype = val ),
+          validator: (val) => val.isEmpty ? 'Please enter electricity cost per year' : null,
+          onChanged: (val) => setState(() => _currentElectricity = int.parse(val)),
         ),
 
         SizedBox(height: 10.0),
 
         TextFormField(
-          initialValue: userData.name,
+          initialValue: userData.naturalGas.toString(),
           decoration: textInputDecoration,
-          validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-          onChanged: (val) => setState(() => _currentName = val),
+          validator: (val) => val.isEmpty ? 'Please enter natural gas cost per year' : null,
+          onChanged: (val) => setState(() => _currentNaturalGas = int.parse(val)),
         ),
 
         SizedBox(height: 10.0),
 
         TextFormField(
-          initialValue: userData.miles.toString(),
+          initialValue: userData.heatingOil.toString(),
           decoration: textInputDecoration,
-          validator: (val) => val.isEmpty ? 'Please enter miles' : null,
-          onChanged: (val) => setState(() => _currentMiles = int.parse(val)),
+          validator: (val) => val.isEmpty ? 'Please enter heating oil and additional fuels cost per year' : null,
+          onChanged: (val) => setState(() => _currentHeatingOil = int.parse(val)),
         ),
 
         SizedBox(height: 10.0),
 
         Slider(
+          value: (_currentWater ?? userData.water).toDouble(),
+          min: 0.0,
+          max: 3.0,
+          divisions: 60,
+          onChanged: (val) => setState(() => _currentWater = val.round()), // need to make the slider work with doubles, FIX EVENTUALLY
+        ),
+
+        // could use a slider for how much % of electricity was from clean energy (solar) and deduct from electricity if we want
+        /*Slider(
           value: (_currentMPG ?? userData.mpg).toDouble(),
           // activeColor: Colors.brown[_currentStrength ?? userData.strength],
           // inactiveColor: Colors.brown[_currentStrength ?? userData.strength],
@@ -182,7 +196,7 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 120,
           divisions: 13,
           onChanged: (val) => setState(() => _currentMPG = val.round()),
-        ),
+        ),*/
 
         RaisedButton(
             color: Colors.pink[400],
@@ -193,10 +207,19 @@ class _SettingsFormState extends State<SettingsForm> {
             onPressed: () async {
               if(_formKey.currentState.validate()){
                 await DatabaseService(uid: user.uid).updateUserData(
-                    _currentName ?? snapshot.data.name,
-                    _currentCartype ?? snapshot.data.cartype,
-                    _currentMiles ?? snapshot.data.miles,
-                    _currentMPG ?? snapshot.data.mpg
+                  name: _currentName ?? snapshot.data.name,
+                  carType: _currentCarType ?? snapshot.data.carType,
+                  miles: _currentMiles ?? snapshot.data.miles,
+                  mpg: _currentMPG ?? snapshot.data.mpg,
+                  electricity: _currentElectricity ?? snapshot.data.electricity,
+                  naturalGas: _currentNaturalGas ?? snapshot.data.naturalGas,
+                  heatingOil: _currentHeatingOil ?? snapshot.data.heatingOil,
+                  water: _currentWater ?? snapshot.data.water,
+                  meatFishEggs: _currentMeatFishEggs ?? snapshot.data.meatFishEggs,
+                  grains: _currentGrains ?? snapshot.data.grains,
+                  dairy: _currentDairy ?? snapshot.data.dairy,
+                  fruitsVegetables: _currentFruitsVegetables ?? snapshot.data.fruitsVegetables,
+                  snacksDrinks: _currentSnacksDrinks ?? snapshot.data.snacksDrinks,
                 );
                 Navigator.pop(context);
               }
@@ -244,9 +267,10 @@ class _SettingsFormState extends State<SettingsForm> {
   Column chooseCol(user, userData, snapshot) {
     switch(pageNum) {
       case 0:
-        return col0(user, userData, snapshot);
+        return transportation(user, userData, snapshot);
       case 1:
-        return col1(user, userData, snapshot);
+        print("next page");
+        return energy(user, userData, snapshot);
     }
     return null;
   }

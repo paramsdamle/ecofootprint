@@ -48,7 +48,11 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
       // create a new document for the user with the uid
-      await DatabaseService(uid: user.uid).updateUserData(name:'New User', cartype:'Gasoline', miles:13800, mpg:22, energy:[1100,480,290], water:1.0, food:[1.0,1.0,1.0,1.0,1.0]);
+      await DatabaseService(uid: user.uid).updateUserData(
+          name:'New User', carType:'Gasoline', miles:13800, mpg:22,
+          electricity:1100, naturalGas: 480, heatingOil: 290, water:1.0,
+          meatFishEggs: 1.0, grains: 1.0, dairy: 1.0, fruitsVegetables: 1.0, snacksDrinks: 1.0
+      );
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

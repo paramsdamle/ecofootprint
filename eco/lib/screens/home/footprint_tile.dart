@@ -18,7 +18,7 @@ class FootprintTile extends StatelessWidget {
             backgroundColor: Colors.green[100],
             // backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
-          title: Text(fp.cartype),
+          title: Text(fp.carType),
           subtitle: Text('Has ${fp.mpg} miles per gallon'),
         ),
       ),

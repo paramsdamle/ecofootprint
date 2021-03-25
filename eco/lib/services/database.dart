@@ -12,17 +12,25 @@ class DatabaseService {
   // final CollectionReference brewCollection = Firestore.instance.collection('brews');
   final CollectionReference fpCollection = Firestore.instance.collection('footprint');
 
-  Future<void> updateUserData({String name, String cartype, int miles, int mpg, List energy, double water,
-      List food}) async {
+  //Future<void> updateUserData({String name, String carType, int miles, int mpg, List energy, double water, List food}) async {
+  Future<void> updateUserData({String name, String carType, int miles, int mpg,
+                               int electricity, int naturalGas, int heatingOil, double water,
+                               double meatFishEggs, double grains, double dairy, double fruitsVegetables, double snacksDrinks}) async {
     int footprint = 0;  // CALCULATE HERE /////////////////////////////////////////
     return await fpCollection.document(uid).setData({
       'name' : name,
-      'cartype': cartype,
+      'carType': carType,
       'miles': miles,
       'mpg': mpg,
-      'energy': energy,
+      'electricity': electricity,
+      'naturalGas': naturalGas,
+      'heatingOil': heatingOil,
       'water': water,
-      'food': food,
+      'meatFishEggs': meatFishEggs,
+      'grains': grains,
+      'dairy': dairy,
+      'fruitsVegetables': fruitsVegetables,
+      'snacksDrinks': snacksDrinks,
       'footprint': footprint,
     });
   }
@@ -30,14 +38,19 @@ class DatabaseService {
   // brew list from snapshot
   List<Footprint> _fpListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      //print(doc.data);
       return Footprint(
-          cartype: doc.data['cartype'] ?? '',
+          carType: doc.data['carType'] ?? '',
           miles: doc.data['miles'] ?? 0,
           mpg: doc.data['mpg'] ?? 0,
-          energy: doc.data['energy'] ?? [0,0,0],
+          electricity: doc.data['electricity'] ?? 0,
+          naturalGas: doc.data['naturalGas'] ?? 0,
+          heatingOil: doc.data['heatingOil'] ?? 0,
           water: doc.data['water'] ?? 0.0,
-          food: doc.data['food'] ?? [0.0,0.0,0.0,0.0,0.0],
+          meatFishEggs: doc.data['meatFishEggs'] ?? 0.0,
+          grains: doc.data['grains'] ?? 0.0,
+          dairy: doc.data['dairy'] ?? 0.0,
+          fruitsVegetables: doc.data['fruitsVegetables'] ?? 0.0,
+          snacksDrinks: doc.data['snacksDrinks'] ?? 0.0,
           footprint: doc.data['footprint'] ?? 0,
       );
     }).toList();
@@ -48,12 +61,18 @@ class DatabaseService {
     return UserData(
         uid: uid,
         name: snapshot.data['name'],
-        cartype: snapshot.data['cartype'],
+        carType: snapshot.data['carType'],
         miles: snapshot.data['miles'],
         mpg: snapshot.data['mpg'],
-        energy: snapshot.data['energy'],
+        electricity: snapshot.data['electricity'], // I clicked "add parameter named ..." multiple times to fix underline, hope thats ok
+        naturalGas: snapshot.data['naturalGas'],
+        heatingOil: snapshot.data['heatingOil'],
         water: snapshot.data['water'],
-        food: snapshot.data['food'],
+        meatFishEggs: snapshot.data['meatFishEggs'],
+        grains: snapshot.data['grains'],
+        dairy: snapshot.data['dairy'],
+        fruitsVegetables: snapshot.data['fruitsVegetables'],
+        snacksDrinks: snapshot.data['snacksDrinks'],
         footprint: snapshot.data['footprint']
     );
   }
