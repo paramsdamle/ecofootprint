@@ -88,6 +88,10 @@ class _SettingsFormState extends State<SettingsForm> {
     super.dispose();
   }
 
+  // TODO: labels for sliders and textformfields
+  // TODO: have columns move up so keyboard doesn't block them out entirely??
+  // TODO: have data be updated when clicking next button as well as update button
+
   Column transportation(user, userData) { // transportation
     nameController.text = _currentName != null ? _currentName : userData.name;
     milesController.text = _currentMiles != null ? _currentMiles.toString() : userData.miles.toString();
@@ -133,7 +137,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentMPG ?? userData.mpg).toDouble(),
           min: 10,
           max: 120,
-          divisions: 13,
+          divisions: 10,
           onChanged: (val) => setState(() => _currentMPG = val.round()),
         ),
 
@@ -219,7 +223,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentWater ?? userData.water).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 30,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentWater = val),
         ),
 
@@ -292,7 +296,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentMeatFishEggs ?? userData.meatFishEggs).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 15,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentMeatFishEggs = val),
         ),
 
@@ -302,7 +306,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentGrains ?? userData.grains).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 30,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentGrains = val),
         ),
 
@@ -312,7 +316,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentDairy ?? userData.dairy).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 30,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentDairy = val),
         ),
 
@@ -322,7 +326,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentFruitsVegetables ?? userData.fruitsVegetables).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 30,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentFruitsVegetables = val),
         ),
 
@@ -332,7 +336,7 @@ class _SettingsFormState extends State<SettingsForm> {
           value: (_currentSnacksDrinks ?? userData.snacksDrinks).toDouble(),
           min: 0.0,
           max: 3.0,
-          divisions: 30,
+          divisions: 12,
           onChanged: (val) => setState(() => _currentSnacksDrinks = val),
         ),
 

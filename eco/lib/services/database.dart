@@ -4,7 +4,6 @@ import 'package:eco/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
-
   final String uid;
   DatabaseService({ this.uid });
 
@@ -16,7 +15,21 @@ class DatabaseService {
   Future<void> updateUserData({String name, String carType, int miles, int mpg,
                                int electricity, int naturalGas, int heatingOil, double water,
                                double meatFishEggs, double grains, double dairy, double fruitsVegetables, double snacksDrinks}) async {
-    int footprint = 0;  // CALCULATE HERE /////////////////////////////////////////
+    // users can only have one type of transportation currently? So can't calculate air travel or transit or diesel?
+    double gasFootprint = (miles / mpg) * 0.011196916; // co2 per gallon
+    double mfgFootprint = (miles / mpg) * 0.0000056;
+    double electricityFootprint = electricity * 0.0049595; // co2 per dollar
+    double naturalGasFootprint = naturalGas * 0.0049098;
+    double heatingOilFootprint = heatingOil * 0.004953;
+    // could include living space area which measures for construction
+    double waterFootprint = water * 0.87; // co2 per amount used compared to other households
+    double meatFishEggsFootprint = meatFishEggs * 1.09;
+    double grainsFootprint = grains * 0.35;
+    double dairyFootprint = dairy * 0.41;
+    double fruitsVegetablesFootprint = fruitsVegetables * 0.33;
+    int footprint = (gasFootprint + mfgFootprint + electricityFootprint + naturalGasFootprint + heatingOilFootprint + waterFootprint +
+                     meatFishEggsFootprint + grainsFootprint + dairyFootprint + fruitsVegetablesFootprint).round();  // measured in tons of CO2
+    print("Footprint: " + footprint.toString());
     return await fpCollection.document(uid).setData({
       'name' : name,
       'carType': carType,
@@ -64,7 +77,7 @@ class DatabaseService {
         carType: snapshot.data['carType'],
         miles: snapshot.data['miles'],
         mpg: snapshot.data['mpg'],
-        electricity: snapshot.data['electricity'], // I clicked "add parameter named ..." multiple times to fix underline, hope thats ok
+        electricity: snapshot.data['electricity'],
         naturalGas: snapshot.data['naturalGas'],
         heatingOil: snapshot.data['heatingOil'],
         water: snapshot.data['water'],
@@ -88,7 +101,6 @@ class DatabaseService {
     return fpCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
   }
-
 }
   //
   // Future<void> updateUserData2(String sugars, String name, int strength) async {
