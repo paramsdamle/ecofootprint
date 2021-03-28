@@ -22,12 +22,13 @@ class DatabaseService {
     double heatingOilFootprint = heatingOil * 0.004953;
     // could include living space area which measures for construction
     double waterFootprint = water * 0.87; // co2 per amount used compared to other households
-    double meatFishEggsFootprint = meatFishEggs * 1.09;
-    double grainsFootprint = grains * 0.35;
-    double dairyFootprint = dairy * 0.41;
-    double fruitsVegetablesFootprint = fruitsVegetables * 0.33;
+    double meatFishEggsFootprint = meatFishEggs * 2.74;
+    double grainsFootprint = grains * 0.89;
+    double dairyFootprint = dairy * 1.04;
+    double fruitsVegetablesFootprint = fruitsVegetables * 0.83;
+    double snacksDrinksFootprint = snacksDrinks * 1.5;
     int footprint = (gasFootprint + mfgFootprint + electricityFootprint + naturalGasFootprint + heatingOilFootprint + waterFootprint +
-                     meatFishEggsFootprint + grainsFootprint + dairyFootprint + fruitsVegetablesFootprint).round();  // measured in tons of CO2
+                     meatFishEggsFootprint + grainsFootprint + dairyFootprint + fruitsVegetablesFootprint + snacksDrinksFootprint).round();  // measured in tons of CO2
     print("Footprint: " + footprint.toString());
     return await fpCollection.document(uid).setData({
       'name' : name,
