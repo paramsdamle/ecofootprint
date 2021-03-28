@@ -35,77 +35,57 @@ class _SettingsFormState extends State<SettingsForm> {
 
   // transportation controllers
   TextEditingController nameController = new TextEditingController();
-  //TextEditingController carTypeController = new TextEditingController();
   TextEditingController milesController = new TextEditingController();
-  //TextEditingController mpgController = new TextEditingController();
   // energy controllers
   TextEditingController electricityController = new TextEditingController();
   TextEditingController naturalGasController = new TextEditingController();
   TextEditingController heatingOilController = new TextEditingController();
   TextEditingController waterController = new TextEditingController();
-  // food controllers
-  /*TextEditingController meatFishEggsController = new TextEditingController();
-  TextEditingController grainsController = new TextEditingController();
-  TextEditingController dairyController = new TextEditingController();
-  TextEditingController fruitsVegetablesController = new TextEditingController();
-  TextEditingController snacksDrinksController = new TextEditingController();*/
 
   @override
   void initState() {
     super.initState();
+
     nameController.addListener(() => _currentName = nameController.text);
     milesController.addListener(() => _currentMiles = int.parse(milesController.text));
-    //mpgController.addListener(() => _currentNaturalGas = int.parse(mpgController.text));
 
     electricityController.addListener(() => _currentElectricity = int.parse(electricityController.text));
     naturalGasController.addListener(() => _currentNaturalGas = int.parse(naturalGasController.text));
     heatingOilController.addListener(() => _currentHeatingOil = int.parse(heatingOilController.text));
-    //waterController.addListener(() => _currentWater = double.parse(waterController.text));
-
-    /*meatFishEggsController.addListener(() => _currentMeatFishEggs = double.parse(meatFishEggsController.text));
-    grainsController.addListener(() => _currentGrains = double.parse(grainsController.text));
-    dairyController.addListener(() => _currentDairy = double.parse(dairyController.text));
-    fruitsVegetablesController.addListener(() => _currentFruitsVegetables = double.parse(fruitsVegetablesController.text));
-    snacksDrinksController.addListener(() => _currentSnacksDrinks = double.parse(snacksDrinksController.text));*/
   }
 
   @override
   void dispose() {
     nameController.dispose();
     milesController.dispose();
-    //mpgController.dispose();
 
     electricityController.dispose();
     naturalGasController.dispose();
     heatingOilController.dispose();
-    //waterController.dispose();
 
-    /*meatFishEggsController.dispose();
-    grainsController.dispose();
-    dairyController.dispose();
-    fruitsVegetablesController.dispose();
-    snacksDrinksController.dispose();*/
     super.dispose();
   }
 
-  // TODO: labels for sliders and textformfields
-  // TODO: have columns move up so keyboard doesn't block them out entirely??
+  // TODO: labels for sliders spacing better
+  // TODO: overflow on food page
+  // TODO: have columns move up so keyboard doesn't block them out entirely?? possibly have settings be whole screen?
   // TODO: have data be updated when clicking next button as well as update button
 
   Column transportation(user, userData) { // transportation
     nameController.text = _currentName != null ? _currentName : userData.name;
     milesController.text = _currentMiles != null ? _currentMiles.toString() : userData.miles.toString();
-    //mpgController.text = _currentMPG ?? userData.mpg;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
+      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
       children: <Widget>[
         //SizedBox(height: 5.0),
 
         DropdownButtonFormField(
           value: _currentCarType ?? userData.carType,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+            labelText: 'Type of transportation'
+          ),
           items: carTypes.map((carType) {
             return DropdownMenuItem(
               value: carType,
@@ -119,7 +99,9 @@ class _SettingsFormState extends State<SettingsForm> {
 
         TextFormField(
           controller: nameController,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+              labelText: 'Username'
+          ),
           validator: (val) => val.isEmpty ? 'Please enter a name' : null,
         ),
 
@@ -127,18 +109,26 @@ class _SettingsFormState extends State<SettingsForm> {
 
         TextFormField(
           controller: milesController,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+            labelText: 'Miles driven per year'
+          ),
           validator: (val) => val.isEmpty ? 'Please enter miles' : null,
         ),
 
-        //SizedBox(height: 10.0),
+        SizedBox(height: 5.0),
+
+        Text(
+          'Miles per gallon',
+          style: TextStyle(fontSize: 11)
+        ),
 
         Slider(
           value: (_currentMPG ?? userData.mpg).toDouble(),
-          min: 10,
-          max: 120,
-          divisions: 10,
+          min: 5,
+          max: 100,
+          divisions: 19,
           onChanged: (val) => setState(() => _currentMPG = val.round()),
+          label: _currentMPG == null ? userData.mpg.toString() : _currentMPG.toString(),
         ),
 
         RaisedButton(
@@ -187,17 +177,18 @@ class _SettingsFormState extends State<SettingsForm> {
     electricityController.text = _currentElectricity != null ? _currentElectricity.toString() : userData.electricity.toString();
     naturalGasController.text = _currentNaturalGas != null ? _currentNaturalGas.toString() : userData.naturalGas.toString();
     heatingOilController.text = _currentHeatingOil != null ? _currentHeatingOil.toString() : userData.heatingOil.toString();
-    //waterController.text = _currentWater != null ? _currentWater.toString() : userData.water.toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
+      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
       children: <Widget>[
         //SizedBox(height: 5.0),
 
         TextFormField(
           controller: electricityController,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+              labelText: '\$ spent on electricity per year'
+          ),
           validator: (val) => val.isEmpty ? 'Please enter electricity cost per year' : null,
         ),
 
@@ -205,7 +196,9 @@ class _SettingsFormState extends State<SettingsForm> {
 
         TextFormField(
           controller: naturalGasController,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+              labelText: '\$ spent on natural gas per year'
+          ),
           validator: (val) => val.isEmpty ? 'Please enter natural gas cost per year' : null,
         ),
 
@@ -213,11 +206,18 @@ class _SettingsFormState extends State<SettingsForm> {
 
         TextFormField(
           controller: heatingOilController,
-          decoration: textInputDecoration,
+          decoration: const InputDecoration(
+              labelText: '\$ spent on heating oil and other fuels per year'
+          ),
           validator: (val) => val.isEmpty ? 'Please enter heating oil and additional fuels cost per year' : null,
         ),
 
-        //SizedBox(height: 10.0),
+        SizedBox(height: 10.0),
+
+        Text(
+          'Water consumed compared to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentWater ?? userData.water).toDouble(),
@@ -225,6 +225,7 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentWater = val),
+          label: _currentWater == null ? userData.water.toString()+'x' : _currentWater.toString()+'x',
         ),
 
         RaisedButton(
@@ -234,7 +235,6 @@ class _SettingsFormState extends State<SettingsForm> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () async {
-              print("current natural gas: " + _currentNaturalGas.toString());
               if(_formKey.currentState.validate()){
                 await DatabaseService(uid: user.uid).updateUserData(
                   name: _currentName ?? userData.name,
@@ -280,17 +280,17 @@ class _SettingsFormState extends State<SettingsForm> {
   }
 
   Column food(user, userData) { // food
-    /*meatFishEggsController.text = _currentMeatFishEggs != null ? _currentMeatFishEggs.toString() : userData.meatFishEggs.toString();
-    grainsController.text = _currentGrains != null ? _currentGrains.toString() : userData.grains.toString();
-    dairyController.text = _currentDairy != null ? _currentDairy.toString() : userData.dairy.toString();
-    fruitsVegetablesController.text = _currentFruitsVegetables != null ? _currentFruitsVegetables.toString() : userData.fruitsVegetables.toString();
-    snacksDrinksController.text = _currentSnacksDrinks != null ? _currentSnacksDrinks.toString() : userData.snacksDrinks.toString();*/
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
+      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,//MainAxisAlignment.end,
       children: <Widget>[
         //SizedBox(height: 5.0),
+
+        Text(
+          'Meat, fish, and eggs consumed relative to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentMeatFishEggs ?? userData.meatFishEggs).toDouble(),
@@ -298,9 +298,13 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentMeatFishEggs = val),
+          label: _currentMeatFishEggs == null ? userData.meatFishEggs.toString()+'x' : _currentMeatFishEggs.toString()+'x',
         ),
 
-        //SizedBox(height: 10.0),
+        Text(
+          'Grains consumed relative to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentGrains ?? userData.grains).toDouble(),
@@ -308,9 +312,13 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentGrains = val),
+          label: _currentGrains == null ? userData.grains.toString()+'x' : _currentGrains.toString()+'x',
         ),
 
-        //SizedBox(height: 10.0),
+        Text(
+          'Dairy consumed relative to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentDairy ?? userData.dairy).toDouble(),
@@ -318,9 +326,13 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentDairy = val),
+          label: _currentDairy == null ? userData.dairy.toString()+'x' : _currentDairy.toString()+'x',
         ),
 
-        //SizedBox(height: 10.0),
+        Text(
+          'Fruits and vegetables consumed relative to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentFruitsVegetables ?? userData.fruitsVegetables).toDouble(),
@@ -328,9 +340,13 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentFruitsVegetables = val),
+          label: _currentFruitsVegetables == null ? userData.fruitsVegetables.toString()+'x' : _currentFruitsVegetables.toString()+'x',
         ),
 
-        //SizedBox(height: 10.0),
+        Text(
+          'Snacks and drinks consumed relative to average',
+          style: TextStyle(fontSize: 11),
+        ),
 
         Slider(
           value: (_currentSnacksDrinks ?? userData.snacksDrinks).toDouble(),
@@ -338,6 +354,7 @@ class _SettingsFormState extends State<SettingsForm> {
           max: 3.0,
           divisions: 12,
           onChanged: (val) => setState(() => _currentSnacksDrinks = val),
+          label: _currentSnacksDrinks == null ? userData.snacksDrinks.toString()+'x' : _currentSnacksDrinks.toString()+'x',
         ),
 
         // could use a slider for how much % of electricity was from clean energy (solar) and deduct from electricity if we want
@@ -746,3 +763,39 @@ class _SettingsFormState extends State<SettingsForm> {
     )
   ]
 ),*/
+
+/*meatFishEggsController.text = _currentMeatFishEggs != null ? _currentMeatFishEggs.toString() : userData.meatFishEggs.toString();
+grainsController.text = _currentGrains != null ? _currentGrains.toString() : userData.grains.toString();
+dairyController.text = _currentDairy != null ? _currentDairy.toString() : userData.dairy.toString();
+fruitsVegetablesController.text = _currentFruitsVegetables != null ? _currentFruitsVegetables.toString() : userData.fruitsVegetables.toString();
+snacksDrinksController.text = _currentSnacksDrinks != null ? _currentSnacksDrinks.toString() : userData.snacksDrinks.toString();*/
+
+//waterController.text = _currentWater != null ? _currentWater.toString() : userData.water.toString();
+
+//waterController.dispose();
+
+/*meatFishEggsController.dispose();
+grainsController.dispose();
+dairyController.dispose();
+fruitsVegetablesController.dispose();
+snacksDrinksController.dispose();*/
+
+//waterController.addListener(() => _currentWater = double.parse(waterController.text));
+
+/*meatFishEggsController.addListener(() => _currentMeatFishEggs = double.parse(meatFishEggsController.text));
+grainsController.addListener(() => _currentGrains = double.parse(grainsController.text));
+dairyController.addListener(() => _currentDairy = double.parse(dairyController.text));
+fruitsVegetablesController.addListener(() => _currentFruitsVegetables = double.parse(fruitsVegetablesController.text));
+snacksDrinksController.addListener(() => _currentSnacksDrinks = double.parse(snacksDrinksController.text));*/
+
+// food controllers
+/*TextEditingController meatFishEggsController = new TextEditingController();
+TextEditingController grainsController = new TextEditingController();
+TextEditingController dairyController = new TextEditingController();
+TextEditingController fruitsVegetablesController = new TextEditingController();
+TextEditingController snacksDrinksController = new TextEditingController();*/
+
+//TextEditingController carTypeController = new TextEditingController();
+//TextEditingController mpgController = new TextEditingController();
+//mpgController.addListener(() => _currentNaturalGas = int.parse(mpgController.text));
+//mpgController.dispose();
