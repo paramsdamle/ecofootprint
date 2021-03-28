@@ -1,5 +1,7 @@
 class Footprint {
 
+  final String name;
+
   final String carType; // electric, gas, diesel, public, air
   final int miles;
   final int mpg;
@@ -18,6 +20,7 @@ class Footprint {
   final int footprint; // total footprint
 
   Footprint({
+    this.name,
     this.carType,
     this.miles,
     this.mpg,

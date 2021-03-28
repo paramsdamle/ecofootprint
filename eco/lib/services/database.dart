@@ -1,4 +1,3 @@
-import 'package:eco/models/brew.dart';
 import 'package:eco/models/footprint.dart';
 import 'package:eco/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,6 +51,7 @@ class DatabaseService {
   List<Footprint> _fpListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
       return Footprint(
+          name: doc.data['name'] ?? '',
           carType: doc.data['carType'] ?? '',
           miles: doc.data['miles'] ?? 0,
           mpg: doc.data['mpg'] ?? 0,

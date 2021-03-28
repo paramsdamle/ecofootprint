@@ -14,6 +14,8 @@ class _FootprintListState extends State<FootprintList> {
 
     final footprints = Provider.of<List<Footprint>>(context) ?? [];
 
+    footprints.sort((a,b) => a.footprint.compareTo(b.footprint));
+
     return ListView.builder(
       itemCount: footprints.length,
       itemBuilder: (context, index) {
