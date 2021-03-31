@@ -90,6 +90,18 @@ class _RegisterState extends State<Register> {
             ],
           ),
         ),
+//        ,
+//          decoration: const BoxDecoration(
+//            gradient: LinearGradient(
+//              begin: Alignment.topLeft,
+//              end: Alignment.bottomRight,
+//              colors: <Color>[
+//                Color(0x31b800),
+//                Color(0x65d63c)
+//              ], // dark green to lighter green
+//              tileMode: TileMode.repeated, /
+//            ),
+//          ),
       ),
     );
   }

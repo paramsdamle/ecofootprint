@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: SettingsForm(),
+          child: SettingsForm()
         );
       });
     }
@@ -26,10 +26,10 @@ class Home extends StatelessWidget {
     return StreamProvider<List<Footprint>>.value(
       value: DatabaseService().footprints,
       child: Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: Colors.green[50],
         appBar: AppBar(
           title: Text('Eco Footprint'),
-          backgroundColor: Colors.brown[400],
+          backgroundColor: Colors.green[400],
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
