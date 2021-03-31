@@ -15,8 +15,8 @@ class FootprintTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.green[100],
-            // backgroundImage: AssetImage('assets/coffee_icon.png'),
+            // backgroundColor: Colors.green[100],
+            backgroundImage: AssetImage('assets/profile_img.png'),
           ),
           title: Text(fp.name),
           subtitle: Text('Has a carbon footprint of ${fp.footprint} tons'),
